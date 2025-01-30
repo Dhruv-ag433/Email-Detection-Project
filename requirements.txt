@@ -4,6 +4,7 @@ gunicorn==23.0.0
 pydantic==2.10.6
 numpy==1.26.4
 pandas==2.2.3
+kaggle
 scikit-learn==1.5.2
 scipy==1.14.1
 joblib==1.4.2  
