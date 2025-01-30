@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-os.makedir(os.path.expanduser("~/.kaggle"), exist_ok = True)
+os.makedirs(os.path.expanduser("~/.kaggle"), exist_ok = True)
 
 kaggle_json = {
     "username": "dhruvagarwal433",
@@ -18,13 +18,13 @@ with open(os.path.expanduser("~/.kaggle/kaggle.json"), "w") as kaggle_file:
     json.dump(kaggle_json, kaggle_file)
 os.chmod(os.path.expanduser("~/.kaggle/kaggle.json"), 0o600)
 
-KAGGLE_DATASET = "dhruvagarwal433/Email-Phishing-Detection"
+KAGGLE_DATASET = "dhruvagarwal433/email_phishing_classifier"
 
 MODEL_FILE = "phishing_email_classifier.pkl"
 VECTORIZER_FILE = "vectorizer.pkl"
 
 if not os.path.exists(MODEL_FILE) or not os.path.exists(VECTORIZER_FILE):
-    kaggle.apt.dataset_download_files(KAGGLE_DATASET, path = "./", unzip = True)
+    kaggle.api.dataset_download_files(KAGGLE_DATASET, path = "./", unzip = True)
 
 model = joblib.load(MODEL_FILE)
 vectorizer = joblib.load(VECTORIZER_FILE)
