@@ -1,4 +1,6 @@
 import os
+os.environ["KAGGLE_USERNAME"] = "dhruvagarwal433"
+os.environ["KAGGLE_KEY"] = "2ed247573a84f0d2890fe164a168af53"
 import kaggle
 import pickle
 import joblib
