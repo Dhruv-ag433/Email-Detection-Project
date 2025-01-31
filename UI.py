@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-FASTAPI_URL = http://fastapi_backend.onrender.com
+FASTAPI_URL = "http://fastapi_backend.onrender.com"
 
 st.title("Email Phishing Detector")
 
