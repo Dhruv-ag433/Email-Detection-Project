@@ -1,32 +1,26 @@
-import os
-os.environ["KAGGLE_USERNAME"] = "dhruvagarwal433"
-os.environ["KAGGLE_KEY"] = "2ed247573a84f0d2890fe164a168af53"
-import kaggle
-import pickle
 import joblib
+import requests
 from fastapi import FastAPI
 from pydantic import BaseModel
+import os
 
 app = FastAPI()
 
-os.makedirs(os.path.expanduser("~/.kaggle"), exist_ok = True)
-
-kaggle_json = {
-    "username": "dhruvagarwal433",
-    "key": os.getenv("KAGGLE_KEY")
-}
-with open(os.path.expanduser("~/.kaggle/kaggle.json"), "w") as kaggle_file:
-    import json
-    json.dump(kaggle_json, kaggle_file)
-os.chmod(os.path.expanduser("~/.kaggle/kaggle.json"), 0o600)
-
-KAGGLE_DATASET = "dhruvagarwal433/email_phishing_classifier"
+MODEL_URL = "https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/phishing_email_classifier.pkl"
+VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/vectorizer.pkl" 
 
 MODEL_FILE = "phishing_email_classifier.pkl"
 VECTORIZER_FILE = "vectorizer.pkl"
 
-if not os.path.exists(MODEL_FILE) or not os.path.exists(VECTORIZER_FILE):
-    kaggle.api.dataset_download_files(KAGGLE_DATASET, path = "./", unzip = True)
+def download_file(url, file_path):
+    if not os.path.exists(file_path):
+        print(f"Downloading {file_path} from {url}...")
+        response = requests.get(url)
+        with open(file_path, "wb") as f:
+            f.write(response.content)
+            
+download_file(MODEL_URL, MODEL_FILE)
+download_file(VECTORIZER_URL, VECTORIZER_FILE)
 
 model = joblib.load(MODEL_FILE)
 vectorizer = joblib.load(VECTORIZER_FILE)
