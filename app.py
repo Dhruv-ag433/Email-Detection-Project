@@ -31,7 +31,7 @@ download_file(SPAM_MODEL_URL, SPAM_MODEL_FILE)
 download_file(SPAM_VECTORIZER_URL, SPAM_VECTORIZER_FILE)
 
 #Lead the models and vectorizers
-phishing_model = joblib.load(PHISHING_MODEL_FILE)
+phishing_model = joblib.load(PHISHING_MODEL_FILE)    
 phishing_vectorizer = joblib.load(PHISHING_VECTORIZER_FILE)
 spam_model = joblib.load(SPAM_MODEL_FILE)
 spam_vectorizer = joblib.load(SPAM_VECTORIZER_FILE)
