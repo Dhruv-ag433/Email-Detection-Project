@@ -1,4 +1,4 @@
-import joblib
+import pickle
 import requests
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -7,10 +7,10 @@ import os
 app = FastAPI()
 
 #URLs for the models and vectorizers
-PHISHING_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_model.pkl"
-PHISHING_VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_vectorizer.pkl"
-SPAM_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/spam_model.pkl"
-SPAM_VECTORIZER_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/spam_vectorizer.pkl" 
+PHISHING_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/resolve/main/phishing_model.pkl"
+PHISHING_VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/Email_Detection_Models/resolve/main/phishing_vectorizer.pkl"
+SPAM_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/resolve/main/spam_model.pkl"
+SPAM_VECTORIZER_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/resolve/main/spam_vectorizer.pkl" 
 
 #File paths for the saved models and vectorizers
 PHISHING_MODEL_FILE = "phishing_model.pkl"
@@ -30,12 +30,19 @@ download_file(PHISHING_VECTORIZER_URL, PHISHING_VECTORIZER_FILE)
 download_file(SPAM_MODEL_URL, SPAM_MODEL_FILE)
 download_file(SPAM_VECTORIZER_URL, SPAM_VECTORIZER_FILE)
 
-#Lead the models and vectorizers
-phishing_model = joblib.load(PHISHING_MODEL_FILE)    
-phishing_vectorizer = joblib.load(PHISHING_VECTORIZER_FILE)
-spam_model = joblib.load(SPAM_MODEL_FILE)
-spam_vectorizer = joblib.load(SPAM_VECTORIZER_FILE)
-
+#Load the models and vectorizers
+with open(PHISHING_MODEL_FILE, 'rb') as model_file:
+    phishing_model = pickle.load(model_file)
+    
+with open(PHISHING_VECTORIZER_FILE, 'rb') as vectorizer_file:
+    phishing_vectorizer = pickle.load(vectorizer_file)
+    
+with open(SPAM_MODEL_FILE, 'rb') as model_file:
+    spam_model = pickle.load(model_file)
+    
+with open(SPAM_VECTORIZER_FILE, 'rb') as vectorizer_file:
+    spam_vectorizer = pickle.load(vectorizer_file)
+    
 class EmailData(BaseModel):
     subject: str
     body: str
@@ -57,7 +64,7 @@ def predict(email: EmailData):
     #Spam Prediction
     spam_input_vector = spam_vectorizer.transform([input_text])
     spam_prediction = spam_model.predict(spam_input_vector)
-    spam_label = "Sapm" if spam_prediction[0] == 1 else "Ham"
+    spam_label = "Spam" if spam_prediction[0] == 1 else "Ham"
     
     return {
         "Phishing Prediction": phishing_label,

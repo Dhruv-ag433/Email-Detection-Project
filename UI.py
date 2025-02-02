@@ -13,7 +13,8 @@ if st.button("Predict"):
         response = requests.post(FASTAPI_URL, json = {"subject": subject, "body": body})
         if response.status_code == 200:
             result = response.json()
-            st.write(f"Prediction: {result['Prediction']}")
+            st.write(f"**Phishing Prediction:** {result['Phishing Prediction']}")
+            st.write(f"**Spam Prediction:** {result['Spam Prediction']}")
         else:
             st.error("Error in prediction request")
     
