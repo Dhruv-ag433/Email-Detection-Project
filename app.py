@@ -6,11 +6,11 @@ import os
 
 app = FastAPI()
 
-MODEL_URL = "https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/phishing_email_classifier.pkl"
-VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/vectorizer.pkl" 
+MODEL_URL = "https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/phishing_model.pkl"
+VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/email-phishing-detection/blob/main/phishing_vectorizer.pkl" 
 
-MODEL_FILE = "phishing_email_classifier.pkl"
-VECTORIZER_FILE = "vectorizer.pkl"
+MODEL_FILE = "phishing_model.pkl"
+VECTORIZER_FILE = "phishing_vectorizer.pkl"
 
 def download_file(url, file_path):
     if not os.path.exists(file_path):
