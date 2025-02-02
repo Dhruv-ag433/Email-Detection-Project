@@ -6,11 +6,17 @@ import os
 
 app = FastAPI()
 
-MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_model.pkl"
-VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_vectorizer.pkl" 
+#URLs for the models and vectorizers
+PHISHING_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_model.pkl"
+PHISHING_VECTORIZER_URL ="https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/phishing_vectorizer.pkl"
+SPAM_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/spam_model.pkl"
+SPAM_VECTORIZER_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/blob/main/spam_vectorizer.pkl" 
 
-MODEL_FILE = "phishing_model.pkl"
-VECTORIZER_FILE = "phishing_vectorizer.pkl"
+#File paths for the saved models and vectorizers
+PHISHING_MODEL_FILE = "phishing_model.pkl"
+PHISHING_VECTORIZER_FILE = "phishing_vectorizer.pkl"
+SPAM_MODEL_FILE = "spam_model.pkl"
+SPAM_VECTORIZER_FILE = "spam_vectorizer.pkl"
 
 def download_file(url, file_path):
     if not os.path.exists(file_path):
@@ -18,12 +24,17 @@ def download_file(url, file_path):
         response = requests.get(url)
         with open(file_path, "wb") as f:
             f.write(response.content)
-            
-download_file(MODEL_URL, MODEL_FILE)
-download_file(VECTORIZER_URL, VECTORIZER_FILE)
+          
+download_file(PHISHING_MODEL_URL, PHISHING_MODEL_FILE)
+download_file(PHISHING_VECTORIZER_URL, PHISHING_VECTORIZER_FILE)
+download_file(SPAM_MODEL_URL, SPAM_MODEL_FILE)
+download_file(SPAM_VECTORIZER_URL, SPAM_VECTORIZER_FILE)
 
-model = joblib.load(MODEL_FILE)
-vectorizer = joblib.load(VECTORIZER_FILE)
+#Lead the models and vectorizers
+phishing_model = joblib.load(PHISHING_MODEL_FILE)
+phishing_vectorizer = joblib.load(PHISHING_VECTORIZER_FILE)
+spam_model = joblib.load(SPAM_MODEL_FILE)
+spam_vectorizer = joblib.load(SPAM_VECTORIZER_FILE)
 
 class EmailData(BaseModel):
     subject: str
@@ -37,11 +48,21 @@ def read_root():
 def predict(email: EmailData):
     
     input_text = email.subject + " " + email.body
-    input_vector = vectorizer.transform([input_text])
     
-    prediction = model.predict(input_vector)
+    #Phishing Prediction
+    phishing_input_vector = phishing_vectorizer.transform([input_text])
+    phishing_prediction = phishing_model.predict(phishing_input_vector)
+    phishing_label = "Phishing" if phishing_prediction[0] == 1 else "Safe"
     
-    return {"Prediction": "Phishing" if prediction[0] == 1 else "Safe"}
+    #Spam Prediction
+    spam_input_vector = spam_vectorizer.transform([input_text])
+    spam_prediction = spam_model.predict(spam_input_vector)
+    spam_label = "Sapm" if spam_prediction[0] == 1 else "Ham"
+    
+    return {
+        "Phishing Prediction": phishing_label,
+        "Spam Prediction": spam_label
+    }
 
 if __name__ == "__main__":
     import uvicorn
