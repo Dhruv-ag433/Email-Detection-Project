@@ -1,23 +1,31 @@
 import streamlit as st
 import requests
 
-FASTAPI_URL = "http://localhost:8000/predict"
+FASTAPI_URL = "http://localhost:8000/get-emails"
 
-st.title("Email Phishing Detector")
+st.title("Email Fraud Detection")
 
-subject = st.text_input("Enter Email Subject")
-body = st.text_area("Enter Email Body")
+st.write("Click the button below to fetch and classify your latest emails.")
 
-if st.button("Predict"):
-    if subject and body:
-        response = requests.post(FASTAPI_URL, json = {"subject": subject, "body": body})
+if st.button("Fetch Emails"):
+    with st.spinner("Fetching and Analyzing emails..."):
+        response = requests.get(FASTAPI_URL)
+        
         if response.status_code == 200:
-            result = response.json()
-            st.write(f"**Phishing Prediction:** {result['Phishing Prediction']}")
-            st.write(f"**Spam Prediction:** {result['Spam Prediction']}")
+            data = response.json()
+            emails = data.get("Emails", [])
+            
+            if not emails:
+                st.success("No new Emails found.")
+            else:
+                for email in emails:
+                    st.subheader(f"From: {email['From']}")
+                    st.write(f"Subject: {email['Subject']}")
+                    st.write(f"Preview: {email['Body']}")
+                    st.write(f"Phishing: {email['Phishing']}")
+                    st.write(f"Spam: {email['Spam']}")
+                    st.write("---")
         else:
-            st.error("Error in prediction request")
-    
-    else:
-        st.error("Please provide both subject and body of the email.")
-    
+            st.error("Error fetching emails. Please check the API connection.")
+
+st.write("Refresh the page to check for new emails.")
