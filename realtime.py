@@ -45,7 +45,7 @@ with open(SPAM_VECTORIZER_FILE, 'rb') as vectorizer_file:
     
 def preprocess_text(text):
     text = text.lower()
-    text = re.sub(r'[^a-zA-Z0-9]', '', text)
+    text = re.sub(r'[^a-zA-Z0-9\s]', '', text)
     return text
 
 def classify_email(text):
@@ -54,14 +54,20 @@ def classify_email(text):
     #Phishing Prediction
     phishing_input_vector = phishing_vectorizer.transform([input_text])
     phishing_pred = phishing_model.predict(phishing_input_vector)
+    phishing_probs = phishing_model.predict_proba(phishing_input_vector).tolist()
     
     #Spam Prediction
     spam_input_vector = spam_vectorizer.transform([input_text])
     spam_pred = spam_model.predict(spam_input_vector)
+    spam_probs = spam_model.predict_proba(spam_input_vector).tolist()
     
+    phishing_threshold = 0.55
+    spam_threshold = 0.6
     return {
-        "Phishing": "Yes" if phishing_pred == 1 else "No",
-        "Spam": "Yes" if spam_pred == 1 else "No"
+        "Phishing": "Yes" if phishing_probs[0][1] >= phishing_threshold else "No",
+        "Spam": "Yes" if spam_probs[0][1] >= spam_threshold else "No",
+        "Phishing_prob": phishing_probs,
+        "Spam_prob": spam_probs
     }
     
 def get_recent_emails():
@@ -111,7 +117,9 @@ def get_recent_emails():
                 "Subject": subject,
                 "Body": body[:200],
                 "Phishing": classify["Phishing"],
-                "Spam": classify["Spam"]
+                "Spam": classify["Spam"],
+                "Phishing_prob": classify["Phishing_prob"],
+                "Spam_prob": classify["Spam_prob"]
             }
             email_results.append(email_info)
         

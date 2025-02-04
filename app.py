@@ -4,7 +4,7 @@ from realtime import get_recent_emails
 
 app = FastAPI()
 
-@app.get("/get-emails")
+@app.get("/fetch-emails")
 async def fetch_emails():
     
     emails = get_recent_emails()
