@@ -65,9 +65,7 @@ def classify_email(text):
     spam_threshold = 0.6
     return {
         "Phishing": "Yes" if phishing_probs[0][1] >= phishing_threshold else "No",
-        "Spam": "Yes" if spam_probs[0][1] >= spam_threshold else "No",
-        "Phishing_prob": phishing_probs,
-        "Spam_prob": spam_probs
+        "Spam": "Yes" if spam_probs[0][1] >= spam_threshold else "No"
     }
     
 def get_recent_emails():
@@ -117,9 +115,7 @@ def get_recent_emails():
                 "Subject": subject,
                 "Body": body[:200],
                 "Phishing": classify["Phishing"],
-                "Spam": classify["Spam"],
-                "Phishing_prob": classify["Phishing_prob"],
-                "Spam_prob": classify["Spam_prob"]
+                "Spam": classify["Spam"]
             }
             email_results.append(email_info)
         

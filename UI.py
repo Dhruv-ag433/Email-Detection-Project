@@ -24,8 +24,6 @@ if st.button("Fetch Emails"):
                     st.write(f"Preview: {email['Body']}")
                     st.write(f"Phishing: {email['Phishing']}")
                     st.write(f"Spam: {email['Spam']}")
-                    st.write(f"Phishing Prob: {email['Phishing_prob']}")
-                    st.write(f"Spam Prob: {email['Spam_prob']}")
                     st.write("---")
         else:
             st.error("Error fetching emails. Please check the API connection.")
