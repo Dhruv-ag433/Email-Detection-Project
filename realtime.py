@@ -53,12 +53,10 @@ def classify_email(text):
     
     #Phishing Prediction
     phishing_input_vector = phishing_vectorizer.transform([input_text])
-    phishing_pred = phishing_model.predict(phishing_input_vector)
     phishing_probs = phishing_model.predict_proba(phishing_input_vector).tolist()
     
     #Spam Prediction
     spam_input_vector = spam_vectorizer.transform([input_text])
-    spam_pred = spam_model.predict(spam_input_vector)
     spam_probs = spam_model.predict_proba(spam_input_vector).tolist()
     
     phishing_threshold = 0.55

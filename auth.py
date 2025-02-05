@@ -8,11 +8,11 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 def authenticate_gmail():
     creds = None
-    toekn_path = 'token.pickle'
+    token_path = 'token.pickle'
     credential_path = 'credentials.json'
     
-    if os.path.exists(toekn_path):
-        with open(toekn_path, 'rb') as token:
+    if os.path.exists(token_path):
+        with open(token_path, 'rb') as token:
             creds = pickle.load(token)
             
     if not creds or not creds.valid:
@@ -29,7 +29,7 @@ def authenticate_gmail():
             flow = InstalledAppFlow.from_client_secrets_file(credential_path, SCOPES)
             creds = flow.run_local_server(port = 8080)
             
-        with open(toekn_path, 'wb') as token:
+        with open(token_path, 'wb') as token:
             pickle.dump(creds, token)
             
     return creds
