@@ -13,10 +13,10 @@ SPAM_MODEL_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/reso
 SPAM_VECTORIZER_URL = "https://huggingface.co/Dhruv-ag433/Email_Detection_Models/resolve/main/spam_vectorizer.pkl" 
 
 #File paths for the saved models and vectorizers
-PHISHING_MODEL_FILE = "phishing_model.pkl"
-PHISHING_VECTORIZER_FILE = "phishing_vectorizer.pkl"
-SPAM_MODEL_FILE = "spam_model.pkl"
-SPAM_VECTORIZER_FILE = "spam_vectorizer.pkl"
+PHISHING_MODEL_FILE = "models/phishing_model.pkl"
+PHISHING_VECTORIZER_FILE = "models/phishing_vectorizer.pkl"
+SPAM_MODEL_FILE = "models/spam_model.pkl"
+SPAM_VECTORIZER_FILE = "models/spam_vectorizer.pkl"
 
 def download_file(url, file_path):
     if not os.path.exists(file_path):
@@ -70,7 +70,7 @@ def get_recent_emails():
     creds = authenticate_gmail()
     service = build('gmail', 'v1', credentials = creds)
     
-    results = service.users().messages().list(userId='me', maxResults=5).execute()
+    results = service.users().messages().list(userId='me', maxResults=10).execute()
     messages = results.get('messages', [])
     
     if not messages:

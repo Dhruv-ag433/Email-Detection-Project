@@ -8,8 +8,8 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
 def authenticate_gmail():
     creds = None
-    token_path = 'token.pickle'
-    credential_path = 'credentials.json'
+    token_path = 'credits/token.pickle'
+    credential_path = 'credits/credentials.json'
     
     if os.path.exists(token_path):
         with open(token_path, 'rb') as token:

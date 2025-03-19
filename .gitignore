@@ -1,4 +1,7 @@
 __pycache__/
+credits/
+datasets/
+models/
 *.pickle
 *.json
 *.pickle
