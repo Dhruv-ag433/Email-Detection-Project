@@ -1,40 +1,178 @@
-# Email Fraud Detection System
 
-This project is an **Email Fraud Detection System** that classifies emails into **Phishing** and **Spam** categories using machine learning models. The system leverages Google's Gmail API to fetch recent emails and uses pre-trained classification models to detect whether an email is phishing or spam in real-time. The backend is built using **FastAPI**, while the frontend is designed with **Streamlit** for an interactive and user-friendly interface. The project also implements **Google OAuth** for secure authentication to access Gmail data.
+# 📧 Email Fraud Detection System
 
-## Project Description
+[![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-green?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Streamlit](https://img.shields.io/badge/Frontend-Streamlit-red?logo=streamlit)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-The aim of this project is to build a system that can help users identify fraudulent or spam emails from their Gmail accounts. With the increasing number of phishing attacks and spam emails, a solution that can automatically classify these emails helps users stay protected and more informed. The system can classify incoming emails as:
+An intelligent system that uses machine learning to detect and classify **phishing** and **spam** emails from your Gmail inbox in real-time.
 
-- **Phishing**: Emails that are malicious, often intended to steal sensitive information such as passwords or credit card numbers.
-- **Spam**: Unwanted emails, often promotional in nature, that can clutter the inbox.
+---
 
-The project is structured to authenticate the user via Google OAuth, fetch their recent emails from Gmail, and classify each email based on its content using pre-trained machine learning models. The user interface provides an intuitive way to view and interact with the results of email classification.
+## 🚀 Project Overview
 
-## Features
+Email fraud — including phishing and spam — continues to be one of the most common online threats. This project is a full-stack **Email Fraud Detection System** that:
+- Authenticates users via **Google OAuth**
+- Fetches their recent emails using the **Gmail API**
+- Classifies them as **Phishing** or **Spam** using trained ML models
 
-- **OAuth Authentication**: Allows users to authenticate with their Google account using OAuth and grant permission to access Gmail data.
-- **Fetch Recent Emails**: Fetches recent emails from the user's Gmail account using the Gmail API.
-- **Email Classification**: Classifies emails as **Phishing** or **Spam** using pre-trained models.
-- **User Interface**: A simple and intuitive UI built with Streamlit for easy interaction.
+The system is built with **FastAPI** (backend), **Streamlit** (frontend), and supports **real-time classification** using models hosted on Hugging Face.
 
-## Technologies Used
+---
 
-- **Backend**: FastAPI (Python)
-- **Frontend**: Streamlit (Python)
-- **Google API**: Google Gmail API for fetching emails
-- **Machine Learning**: Scikit-learn for the phishing and spam classification models
-- **Authentication**: Google OAuth 2.0
-- **Model Hosting**: HuggingFace (for model and vectorizer storage)
+## 🧠 Key Features
 
-## Requirements
+- 🔐 **Google OAuth 2.0 Authentication**  
+  Securely sign in and grant access to your Gmail inbox
 
-Before running the project, ensure that you have the following installed:
+- 📬 **Gmail API Integration**  
+  Automatically fetch recent emails from your Gmail account
 
-- Python 3.8 or higher
-- Pip
+- ⚡ **Real-time Email Classification**  
+  Classify emails as:
+  - `Phishing`: Malicious content intended to steal sensitive data
+  - `Spam`: Unwanted promotional or bulk messages
 
-You will also need to install the necessary dependencies:
+- 🧑‍💻 **User-Friendly Interface**  
+  Clean and interactive UI using Streamlit for seamless user experience
 
+- 📦 **Model Hosting on Hugging Face**  
+  Vectorizer and ML models are loaded from Hugging Face for faster deployment
+
+---
+
+## 🛠️ Tech Stack
+
+| Area       | Tools / Libraries                                  |
+|------------|----------------------------------------------------|
+| Backend    | FastAPI, Uvicorn                                   |
+| Frontend   | Streamlit                                          |
+| ML Models  | Scikit-learn (Random Forest, Naive Bayes)          |
+| OAuth      | Google OAuth 2.0                                   |
+| API        | Gmail API                                          |
+| Deployment | Docker (local), Hugging Face (model storage)       |
+| Others     | Requests, Pandas, Pickle, JSON, dotenv             |
+
+---
+
+## 📁 Project Structure
+
+```
+email-fraud-detection/
+│
+├── app/                   # FastAPI backend
+│   └── ...               
+├── ui/                    # Streamlit frontend
+│   └── ...
+├── models/                # ML models (vectorizer, phishing, spam)
+├── requirements.txt       # Python dependencies
+├── README.md              # This file
+└── .env                   # Gmail API credentials and secrets
+```
+
+---
+
+## 📦 Installation
+
+### 🔧 Prerequisites
+- Python 3.8+
+- Gmail API credentials
+- Virtual environment (optional but recommended)
+
+### 📥 Clone the Repository
+```bash
+git clone https://github.com/your-username/email-fraud-detection.git
+cd email-fraud-detection
+```
+
+### 📦 Install Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+### 🔑 Setup `.env`
+Create a `.env` file with your Gmail API and OAuth credentials:
+```env
+CLIENT_ID=your_client_id
+CLIENT_SECRET=your_client_secret
+REDIRECT_URI=http://localhost:8501
+```
+
+---
+
+## ▶️ Run the App
+
+### 🔹 Start FastAPI Backend
+```bash
+uvicorn app.main:app --reload
+```
+
+### 🔹 Start Streamlit Frontend
+```bash
+cd ui
+streamlit run main.py
+```
+
+---
+
+## 🧪 Sample Dataset
+
+The models were trained on:
+- Public phishing & spam datasets
+- Preprocessed Gmail messages
+- Feature extraction using `TfidfVectorizer`
+
+---
+
+## 🧠 Model Details
+
+| Task         | Algorithm        |
+|--------------|------------------|
+| Phishing     | Random Forest    |
+| Spam         | Multinomial Naive Bayes |
+
+Trained models and vectorizers are hosted on Hugging Face for easy loading and reuse.
+
+---
+
+## 🐳 Docker (Optional)
+
+Build and run with Docker:
+
+```bash
+docker build -t email-detector .
+docker run -p 8501:8501 email-detector
+```
+
+---
+
+## 📈 Future Scope
+
+- ✅ Real-time detection
+- ✅ Phishing detection
+- ✅ Spam detection
+- 🔄 Dataset Expansion
+- 🔒 Spoofing & Impersonation Detection *(Dropped)*
+- 🌐 Live Deployment (Planned for local use only)
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🙋‍♂️ Author
+
+**Dhruv Agarwal**  
+📧 dhruvagarwal.work@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/your-link-here)  
+💼 [Portfolio](https://your-portfolio-link.com) *(optional)*
+
+---
+
+## 🌟 Show Your Support
+
+If you found this project helpful, please ⭐ it and share it with others!
