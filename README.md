@@ -159,7 +159,7 @@ docker run -p 8501:8501 email-detector
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
 
 ---
 
@@ -167,7 +167,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Dhruv Agarwal**  
 📧 dhruv.agarwal433@gmail.com  
-🔗 [LinkedIn](https://www.linkedin.com/in/dhruvagarwal433/)  
+🔗 [LinkedIn](https://www.linkedin.com/in/dhruvagrawal433/)  
 
 ---
 
