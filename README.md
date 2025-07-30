@@ -153,7 +153,6 @@ docker run -p 8501:8501 email-detector
 - ✅ Phishing detection
 - ✅ Spam detection
 - 🔄 Dataset Expansion
-- 🔒 Spoofing & Impersonation Detection *(Dropped)*
 - 🌐 Live Deployment (Planned for local use only)
 
 ---
@@ -167,9 +166,8 @@ This project is licensed under the [MIT License](LICENSE).
 ## 🙋‍♂️ Author
 
 **Dhruv Agarwal**  
-📧 dhruvagarwal.work@gmail.com  
-🔗 [LinkedIn](https://www.linkedin.com/in/your-link-here)  
-💼 [Portfolio](https://your-portfolio-link.com) *(optional)*
+📧 dhruv.agarwal433@gmail.com  
+🔗 [LinkedIn](https://www.linkedin.com/in/dhruvagarwal433/)  
 
 ---
 
